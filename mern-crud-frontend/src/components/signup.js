@@ -5,9 +5,12 @@ import {FormControl} from '@mui/material';
 import {Typography} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios' 
+import { useDispatch } from 'react-redux';
+import { storeFormData } from '../reducers/slice/formDataSlice';
  const url = "http://localhost:5000"
 
 const SignupForm = () => {
+  const dispatch  = useDispatch()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -17,10 +20,15 @@ const SignupForm = () => {
  const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    // setFormData(prevState => ({
+    //   ...prevState,
+    //   [name]: value
+    // }));
+    const formData = {
+      [name]:value
+    }
+      console.log("ttttttt",e)
+    dispatch(storeFormData(formData))
   };
 
   const handleSubmit = async (e) => {
@@ -52,7 +60,7 @@ const SignupForm = () => {
           label="First Name"
           sx = {{width:"40%"}}
           name="firstName"
-          value={formData.firstName}
+          //value={formData.firstName}
           onChange={handleChange}
           variant="outlined"
           required
@@ -63,7 +71,7 @@ const SignupForm = () => {
           label="Last Name"
           name="lastName"
           sx = {{width:"40%"}}
-          value={formData.lastName}
+          //value={formData.lastName}
           onChange={handleChange}
           variant="outlined"
           required
